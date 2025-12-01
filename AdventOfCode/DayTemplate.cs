@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace AdventOfCode;
 
 [RunTest]
-public class Day01 : TestableDay
+public class Day00 : TestableDay
 {
     private readonly string _input;
 
-    public Day01()
+    public Day00()
     {
         _input = File.ReadAllText(InputFilePath);
     }
