@@ -1,3 +1,10 @@
+const string testInputFullPath = @"C:\Users\Peter\RiderProjects\AdventOfCode2025\AdventOfCode\TestInputs";
+
+foreach (FileInfo file in new DirectoryInfo(testInputFullPath).GetFiles())
+{
+    file.CopyTo(Path.Combine(Directory.GetCurrentDirectory(), "TestInputs", file.Name), true);
+}
+
 if (args.Length == 0)
 {
     await Solver.SolveLast(opt => opt.ClearConsole = false);
