@@ -33,16 +33,16 @@ public sealed class Day01 : TestableDay
 
     public override ValueTask<string> Solve_2()
     {
-        /*int runningSum = 50;
+        int pos = 50;
         int timesZero = 0;
-        foreach (int dir in _dirs)
+        foreach (int dist in _dirs)
         {
-            runningSum = Wrap(runningSum, dir, 100, out int timesWrapped);
-            timesZero += timesWrapped;
-            if (runningSum == 0)
-                timesZero++;
-        }*/
-        int timesZero = SolveBad();
+            if (dist > 0)
+                timesZero += (int)(Math.Floor((double)(pos + dist) / 100) - Math.Floor((double)pos / 100));
+            else
+                timesZero += (int)(Math.Floor((double)(pos - 1) / 100) - Math.Floor((double)(pos + dist - 1) / 100));
+            pos = Mod(pos + dist, 100);
+        }
         return new ValueTask<string>(timesZero.ToString());
     }
 
@@ -58,53 +58,8 @@ public sealed class Day01 : TestableDay
         return wrapped + min;
     }
 
-    private static int Wrap(int initX, int change, int max, out int timesWrapped)
+    private static int Mod(int x, int m)
     {
-        int x = initX + change;
-        timesWrapped = x / max;
-        int wrapped = x % max;
-
-        if (wrapped < 0)
-        {
-            wrapped += max;
-            timesWrapped--;
-        }
-
-        timesWrapped = Math.Abs(timesWrapped);
-        if ((initX == 0 || wrapped == 0) && timesWrapped > 0)
-            timesWrapped--;
-        return wrapped;
-    }
-
-    private int SolveBad()
-    {
-        int currentValue = 50;
-        int timesZero = 0;
-        foreach (int dir in _dirs)
-        {
-            if (dir >= 0)
-                for (int i = 0; i < dir; i++)
-                {
-                    currentValue++;
-                    if (currentValue < 0)
-                        currentValue = 99;
-                    if (currentValue > 99)
-                        currentValue = 0;
-                    if (currentValue == 0)
-                        timesZero++;
-                }
-            else
-                for (int i = 0; i < -dir; i++)
-                {
-                    currentValue--;
-                    if (currentValue < 0)
-                        currentValue = 99;
-                    if (currentValue > 99)
-                        currentValue = 0;
-                    if (currentValue == 0)
-                        timesZero++;
-                }
-        }
-        return timesZero;
+        return (x % m + m) % m;
     }
 }
