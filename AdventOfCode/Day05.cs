@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode;
 
-[RunTest]
+//[RunTest]
 public sealed class Day05 : TestableDay
 {
     private readonly (ulong start, ulong end)[] _freshRanges;
@@ -41,31 +41,31 @@ public sealed class Day05 : TestableDay
         while (didMerge)
         {
             didMerge = false;
-            List<(ulong start, ulong end)> toRemove = [];
+            List<(ulong start, ulong end)> toMerge = [];
             
             foreach (var range in ranges)
             {
                 (ulong start, ulong end) result = (0, 0);
                 if (!ranges.Any(r => CheckRanges(r, range, out result))) continue;
-                toRemove.Add(range);
-                toRemove.Add(result);
+                toMerge.Add(range);
+                toMerge.Add(result);
                 didMerge = true;
                 break;
             }
 
-            if (toRemove.Count != 0)
+            if (toMerge.Count != 0)
             {
-                foreach (var r in toRemove)
+                foreach (var r in toMerge)
                     ranges.Remove(r);
                 
-                (ulong start, ulong end) merged = (Math.Min(toRemove[0].start, toRemove[1].start), Math.Max(toRemove[0].end, toRemove[1].end));
+                (ulong start, ulong end) merged = (Math.Min(toMerge[0].start, toMerge[1].start), Math.Max(toMerge[0].end, toMerge[1].end));
                 ranges.Add(merged);
             }
         }
-
-        ulong freshableCount = ranges.Aggregate<(ulong start, ulong end), ulong>(0, (current, range) => current + (range.end - range.start + 1));
+        
+        ulong freshableCount = ranges.Distinct().Aggregate<(ulong start, ulong end), ulong>(0, (current, range) => current + (range.end - range.start + 1));
         return new ValueTask<string>(freshableCount.ToString());
-
+        
         bool CheckRanges((ulong start, ulong end) a, (ulong start, ulong end) b, out (ulong start, ulong end) result)
         {
             result = a;
