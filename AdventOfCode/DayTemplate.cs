@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace AdventOfCode;
 
 [RunTest]
-public class Day00 : TestableDay
+public sealed class Day00 : TestableDay
 {
     private readonly string _input;
 

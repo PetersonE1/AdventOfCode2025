@@ -9,13 +9,12 @@ namespace AdventOfCode;
 //[RunTest]
 public sealed class Day01 : TestableDay
 {
-    private readonly string _input;
     private readonly int[] _dirs;
 
     public Day01()
     {
-        _input = File.ReadAllText(InputFilePath);
-        _dirs = _input.Split("\n").Select(s => s.Replace('L', '-').Replace("R", null)).Select(int.Parse).ToArray();
+        string input = File.ReadAllText(InputFilePath);
+        _dirs = input.Split("\n").Select(s => s.Replace('L', '-').Replace("R", null)).Select(int.Parse).ToArray();
     }
 
     public override ValueTask<string> Solve_1()
