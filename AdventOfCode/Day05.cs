@@ -81,5 +81,5 @@ public sealed class Day05 : TestableDay
 
     private static bool CheckInRange(ulong start, ulong end, ulong value) => (value >= start && value <= end);
 
-    private static bool DoesOverlap(ulong startA, ulong startB, ulong endA, ulong endB) => startA < endB && startB < endA;
+    private static bool DoesOverlap(ulong startA, ulong startB, ulong endA, ulong endB) => startA <= endB && startB <= endA;
 }
